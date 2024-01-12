@@ -6,7 +6,7 @@ env:
   REG_SUIT_CLIENT_ID: ${{secrets.REG_SUIT_CLIENT_ID}}
 
 jobs:
-  build:
+  run-reg:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +29,13 @@ jobs:
         run: pnpm build-storybook
       - name: run screenshots
         run: pnpm ci:screenshots
+      - name: make directories
+        run: mkdir __screenshots-received__/
       - name: move files
-        run: mv -f __screenshots__/* __screenshots-received__
+        run: mv -f __screenshots__/* __screenshots-received__/
       - name: workaround for detached HEAD
         run: |
-          git checkout main || git checkout -b main && git pull
+          git checkout ${{github.base_ref}} || git checkout -b ${{github.base_ref}} && git pull
       - name: package install
         run: |
           pnpm i --frozen-lockfile
@@ -42,9 +44,12 @@ jobs:
       - name: run screenshots
         run: pnpm ci:screenshots2
       - name: make directories
-        run: mkdir .reg && cd .reg && mkdir expected && cd ../../
+        run: mkdir .reg && cd .reg && mkdir expected && cd ../
       - name: move files
         run: mv -f __screenshots__/* .reg/expected/
+      - name: workaround for detached HEAD
+        run: |
+          git checkout ${{github.head_ref}} || git checkout -b ${{github.head_ref}} && git pull
       - name: run reg-suit
         run: |
           pnpm vrt
@@ -61,8 +66,8 @@ jobs:
         id: fc
         with:
           issue-number: ${{ github.event.number }}
-          comment-author: "reg-suit"
-          body-includes: reg-suit
+          comment-author: "github-actions[bot]"
+          body-includes: reg-suit report
 
       - name: upsert comment
         uses: peter-evans/create-or-update-comment@v3
