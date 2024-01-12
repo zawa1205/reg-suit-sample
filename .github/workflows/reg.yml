@@ -1,0 +1,28 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      - name: Use Node.js v20
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: "pnpm"
+      - name: npm install, build, and test
+        run: |
+          pnpm i --frozen-lockfile
+      - name: run screenshots
+        run: pnpm ci:screenshots
+      - name: workaround for detached HEAD
+        run: |
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
+      - name: run reg-suit
+        run: |
+          pnpm vrt

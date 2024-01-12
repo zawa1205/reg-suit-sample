@@ -1,2 +1,9 @@
+.env
 node_modules
+
+# storybook
 __screenshots__
+storybook-static
+
+# reg-suit
+.reg

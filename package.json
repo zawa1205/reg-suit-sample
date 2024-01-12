@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "screenshots": "storycap --server-cmd \"storybook dev -p 9009\" \"http://localhost:9009\"",
-    "build-storybook": "storybook build"
+    "ci:screenshots": "pnpm build-storybook && storycap --serverTimeout 60000 --captureTimeout 10000 --serverCmd 'pnpx http-server storybook-static --ci -p 9009' http://localhost:9009",
+    "vrt": "reg-suit run"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,9 @@
     "puppeteer": "^21.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "reg-keygen-git-hash-plugin": "^0.12.2",
+    "reg-notify-github-plugin": "^0.12.2",
+    "reg-suit": "^0.12.2",
     "storybook": "^7.6.8",
     "storycap": "^4.2.0"
   }
