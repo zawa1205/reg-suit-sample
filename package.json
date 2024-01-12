@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "storybook build -o __storybook__",
     "screenshots": "storycap --server-cmd \"storybook dev -p 9009\" \"http://localhost:9009\"",
-    "ci:screenshots": "pnpm build-storybook && storycap --serverTimeout 60000 --captureTimeout 10000 --serverCmd 'pnpx http-server storybook-static --ci -p 9009' http://localhost:9009",
+    "ci:screenshots": "storycap --serverTimeout 60000 --captureTimeout 10000 --serverCmd 'pnpx http-server __storybook__ --ci -p 9009' http://localhost:9009",
+    "ci:screenshots2": "storycap --serverTimeout 60000 --captureTimeout 10000 --serverCmd 'pnpx http-server __storybook__ --ci -p 9001' http://localhost:9001",
     "vrt": "reg-suit run"
   },
   "repository": {
