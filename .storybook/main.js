@@ -6,6 +6,7 @@ const config = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
+    "storycap",
   ],
   framework: {
     name: "@storybook/react-vite",
