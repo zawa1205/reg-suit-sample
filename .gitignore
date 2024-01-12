@@ -2,8 +2,9 @@
 node_modules
 
 # storybook
+__storybook__
 __screenshots__
-storybook-static
+__screenshots-received__
 
 # reg-suit
 .reg
