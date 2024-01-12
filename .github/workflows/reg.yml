@@ -18,6 +18,8 @@ jobs:
       - name: npm install, build, and test
         run: |
           pnpm i --frozen-lockfile
+      - name: install browser
+        run: pnpx puppeteer browsers install chrome
       - name: run screenshots
         run: pnpm ci:screenshots
       - name: workaround for detached HEAD
