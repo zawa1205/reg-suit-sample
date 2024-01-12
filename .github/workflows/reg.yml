@@ -1,5 +1,8 @@
 on: [push]
 
+env:
+  REG_SUIT_CLIENT_ID: ${{secrets.REG_SUIT_CLIENT_ID}}
+
 jobs:
   build:
     runs-on: ubuntu-latest
